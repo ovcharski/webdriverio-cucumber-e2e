@@ -15,11 +15,11 @@ jobs:
     steps:
       # Step 1: Check out the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18  # Use Node.js 18 (or your preferred version)
           cache: 'npm'      # Cache npm dependencies for faster builds
@@ -39,7 +39,7 @@ jobs:
       # Step 6: Upload Allure results (optional)
       - name: Upload Allure results
         if: always()  # Upload results even if tests fail
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: allure-results/
