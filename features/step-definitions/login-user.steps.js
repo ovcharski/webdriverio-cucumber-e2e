@@ -1,5 +1,5 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
-const LoginPage = require('../pageobjects/login-user.page');
+const LoginPage = require('../pageobjects/login.page');
 
 // Hardcoded credentials (or load from a config file/environment variables)
 const VALID_USERNAME = 'playwrightuser';

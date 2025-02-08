@@ -1,10 +1,8 @@
-// features/step-definitions/registerSteps.js
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { expect } = require('@wdio/globals');
 const RegistrationPage = require('../pageobjects/register.page');
 const DataGenerator = require('../utils/DataGenerator');
 
-// Use Cucumber World to share context between steps
 Given('I am on the registration page', async function () {
   await RegistrationPage.open();
 });

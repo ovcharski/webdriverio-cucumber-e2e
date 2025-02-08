@@ -29,6 +29,12 @@ class RegistrationPage {
     async submitForm() {
       await this.submitButton.click();
     }
+
+    // Error message selectors
+  get usernameError() { return $('#um-error-for-user_login-91'); }
+  get emailError() { return $('#um-error-for-user_email-91'); }
+  get passwordError() { return $('#um-error-for-user_password-91'); }
+  get confirmPasswordError() { return $('#um-error-for-confirm_user_password-91'); }
   }
   
   module.exports = new RegistrationPage();
