@@ -1,42 +1,30 @@
+// features/step-definitions/registerSteps.js
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { browser, $ } = require('@wdio/globals');
-const { faker } = require('@faker-js/faker');
+const { expect } = require('@wdio/globals');
+const RegistrationPage = require('../pageobjects/register.page');
+const DataGenerator = require('../utils/DataGenerator');
 
-// Shared context to store the username
-const context = {};
-
-Given('I am on the registration page', async () => {
-    await browser.url('https://ovcharski.com/shop/register/');
+// Use Cucumber World to share context between steps
+Given('I am on the registration page', async function () {
+  await RegistrationPage.open();
 });
 
-When('I fill in the registration form with valid details', async () => {
-    // Generate dynamic values using faker
-    const username = faker.internet.userName().toLowerCase();
-    const firstName = faker.person.firstName();
-    const lastName = faker.person.lastName();
-
-    // Store the username in the shared context
-    context.username = username;
-
-    await $('#user_login-91').setValue(username);
-    await $('#first_name-91').setValue(firstName);
-    await $('#last_name-91').setValue(lastName);
-    await $('#user_email-91').setValue(faker.internet.email());
-    await $('#user_password-91').setValue('JirjI*3nf)3jgIJRF');
-    await $('#confirm_user_password-91').setValue('JirjI*3nf)3jgIJRF');
-    await $('label=Male').click();
-    await $('#phone_number-91').setValue('35988484548');
+When('I fill in the registration form with valid details', async function () {
+  this.userData = DataGenerator.generateUserData();
+  await RegistrationPage.fillRegistrationForm(this.userData);
 });
 
-When('I submit the form', async () => {
-    await $('#um-submit-btn').click();
+When('I submit the form', async function () {
+  await RegistrationPage.submitForm();
 });
 
-Then('I should be redirected to my profile page', async () => {
-    await expect(browser).toHaveUrlContaining(`/shop/user/${context.username}`);
+Then('I should be redirected to my profile page', async function () {
+  await expect(browser).toHaveUrlContaining(`/shop/user/${this.userData.username}`);
 });
 
-Then('I should see a message indicating my profile is empty', async () => {
-    const profileMessage = await $('#post-95');
-    await expect(profileMessage).toHaveTextContaining('Your profile is looking a little empty. Why not add some information!');
+Then('I should see a message indicating my profile is empty', async function () {
+  const profileMessage = await $('#post-95');
+  await expect(profileMessage).toHaveTextContaining(
+    'Your profile is looking a little empty. Why not add some information!'
+  );
 });
